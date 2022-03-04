@@ -1,0 +1,14 @@
+logging:
+  level.root: WARN
+  level.no: ${LOG_LEVEL:DEBUG}
+  level.org.springframework: WARN
+  level.org.springframework.web: WARN
+  level.org.apache.jena: ERROR
+server:
+  port: 8080
+---
+spring:
+  config.activate.on-profile: develop
+---
+spring:
+  config.activate.on-profile: integration-test
