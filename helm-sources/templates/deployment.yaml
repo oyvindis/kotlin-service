@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kotlin-service
+  name: kotlin-service
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  selector:
+    matchLabels:
+      app: kotlin-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kotlin-service
+    spec:
+      containers:
+        - name: kotlin-service
+          image: oyvindis/kotlin-service
+          imagePullPolicy: Always
+      restartPolicy: Always
