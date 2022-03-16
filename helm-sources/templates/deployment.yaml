@@ -19,7 +19,18 @@ spec:
         app: kotlin-service
     spec:
       containers:
-        - name: kotlin-service
+        - env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: MONGO_USERNAME
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: MONGO_PASSWORD
+          name: kotlin-service
           image: oyvindis/kotlin-service
           imagePullPolicy: Always
       restartPolicy: Always
