@@ -7,9 +7,39 @@ logging:
 server:
   port: 8080
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          airthings:
+            clientId: ${CLIENT_ID}
+            clientSecret: ${CLIENT_SECRET}
+            clientAuthenticationMethod: client_secret_post
+            authorizationGrantType: client_credentials
+            scopes: read:device:current_values
+            clientName: ois-airthings
+        provider:
+          airthings:
+            authorizationUri: https://accounts.airthings.com/authorize
+            tokenUri: https://accounts-api.airthings.com/v1/token
   data.mongodb.uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST:mongodb}:${MONGO_PORT:27017}/climate?authSource=admin&authMechanism=SCRAM-SHA-1
 ---
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          airthings:
+            clientId: ${CLIENT_ID}
+            clientSecret: ${CLIENT_SECRET}
+            clientAuthenticationMethod: client_secret_post
+            authorizationGrantType: client_credentials
+            scopes: read:device:current_values
+            clientName: ois-airthings
+        provider:
+          airthings:
+            authorizationUri: https://accounts.airthings.com/authorize
+            tokenUri: https://accounts-api.airthings.com/v1/token
   config.activate.on-profile: develop
   data.mongodb.uri: mongodb://admin:admin@localhost:27017/climate?authSource=admin&authMechanism=SCRAM-SHA-1
 ---

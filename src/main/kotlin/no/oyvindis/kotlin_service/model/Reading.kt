@@ -10,7 +10,7 @@ import java.util.*
 data class ReadingDBO(
     @Id
     val id: String,
-    val location: String?,
+    val location: String,
     val battery: String?,
     val co2: String?,
     val humidity: String?,
