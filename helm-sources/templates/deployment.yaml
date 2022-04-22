@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kotlin-service
+  name: kotlin-service
+  namespace: {{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+spec:
+  selector:
+    matchLabels:
+      app: kotlin-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kotlin-service
+    spec:
+      containers:
+        - env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: MONGO_USERNAME
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: MONGO_PASSWORD
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: airthings-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: airthings-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: CLIENT_SECRET
+          name: kotlin-service
+          image: oyvindis/kotlin-service
+          imagePullPolicy: Always
+      restartPolicy: Always

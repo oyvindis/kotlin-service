@@ -1,0 +1,43 @@
+<configuration>
+
+    <appender name="compact" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <loggerName/>
+                <logLevel>
+                    <fieldName>severity</fieldName>
+                </logLevel>
+                <message>
+                    <fieldName>shortMessage</fieldName>
+                </message>
+                <pattern>
+                    <pattern>{ "message": "%exception%message", "serviceContext": { "service": "kotlin-service" } }</pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="json-async" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="json"/>
+    </appender>
+
+    <logger name="no.oyvindis" level="debug" additivity="false">
+        <appender-ref ref="${LOG_FORMAT:-json-async}" />
+    </logger>
+
+    <logger name="org.apache.jena.riot" level="error" additivity="false">
+        <appender-ref ref="${LOG_FORMAT:-json-async}" />
+    </logger>
+
+    <root level="warn">
+        <appender-ref ref="${LOG_FORMAT:-json-async}" />
+    </root>
+</configuration>
