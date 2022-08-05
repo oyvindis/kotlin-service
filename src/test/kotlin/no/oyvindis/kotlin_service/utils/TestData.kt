@@ -1,5 +1,6 @@
 package no.oyvindis.kotlin_service.utils
 
+import no.oyvindis.kotlin_service.model.Location
 import no.oyvindis.kotlin_service.model.LocationDBO
 import org.testcontainers.shaded.com.google.common.collect.ImmutableMap
 
@@ -20,4 +21,9 @@ val LOCATION_NAME_1000 = "Location_1000"
 val LOCATION_1000 = LocationDBO(
     id = "1000",
     name = "Location_1000"
+)
+
+val LOCATION_0 = Location(
+    id = "id0",
+    name = "location 0"
 )
