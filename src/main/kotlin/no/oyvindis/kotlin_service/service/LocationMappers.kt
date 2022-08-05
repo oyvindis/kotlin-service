@@ -8,3 +8,9 @@ fun LocationDBO.toDTO(): Location =
         id = id,
         name = name
     )
+
+fun Location.toDBO(id: String): LocationDBO =
+    LocationDBO(
+        id = id,
+        name = name
+    )
