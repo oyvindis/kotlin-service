@@ -2,6 +2,7 @@ package no.oyvindis.kotlin_service.utils
 
 import no.oyvindis.kotlin_service.model.Location
 import no.oyvindis.kotlin_service.model.LocationDBO
+import no.oyvindis.kotlin_service.model.Reading
 import no.oyvindis.kotlin_service.model.ReadingDBO
 import org.testcontainers.shaded.com.google.common.collect.ImmutableMap
 
@@ -41,4 +42,9 @@ val READING_1000 = ReadingDBO(
     temp = "25.0",
     time = 1650660311,
     voc = "694.0"
+)
+
+val READING_0 = Reading(
+    id = "id0",
+    temp = "111"
 )
