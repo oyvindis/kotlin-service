@@ -11,15 +11,13 @@ import no.oyvindis.kotlin_service.utils.LOCATION_ID_1000
 import no.oyvindis.kotlin_service.utils.READING_0
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.springframework.web.reactive.function.client.WebClient
 import kotlin.test.assertTrue
 
 @Tag("unit")
 class ReadingService: ApiTestContext() {
     private val readingDAO: ReadingDAO = mock()
     private val locationDAO: LocationDAO = mock()
-    private val webClient: WebClient = mock()
-    private val readingService = ReadingService(readingDAO, locationDAO, webClient)
+    private val readingService = ReadingService(readingDAO, locationDAO)
 
     @Test
     fun `Get all readings by location id` () {
