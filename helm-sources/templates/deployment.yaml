@@ -30,16 +30,6 @@ spec:
                 secretKeyRef:
                   name: mongodb-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
                   key: MONGO_PASSWORD
-            - name: CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: airthings-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                  key: CLIENT_ID
-            - name: CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: airthings-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
-                  key: CLIENT_SECRET
           name: kotlin-service
           image: oyvindis/kotlin-service
           imagePullPolicy: Always
