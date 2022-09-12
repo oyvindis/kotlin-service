@@ -30,6 +30,16 @@ spec:
                 secretKeyRef:
                   name: mongodb-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
                   key: MONGO_PASSWORD
+            - name: SLACK_TOKEN_ID
+              valueFrom:
+                secretKeyRef:
+                  name: slack-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: SLACK_TOKEN_ID
+            - name: SLACK_CHANNEL_ID
+              valueFrom:
+                secretKeyRef:
+                  name: slack-{{ required "Missing value NAMESPACE" .Values.NAMESPACE }}
+                  key: SLACK_CHANNEL_ID
           name: kotlin-service
           image: oyvindis/kotlin-service
           imagePullPolicy: Always
