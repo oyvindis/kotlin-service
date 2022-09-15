@@ -6,11 +6,15 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.oyvindis.kotlin_service.utils.ApiTestContext
+import no.oyvindis.kotlin_service.utils.LOCATION_ID_1000
 import no.oyvindis.kotlin_service.utils.apiGet
+import no.oyvindis.kotlin_service.utils.authorizedRequest
+import no.oyvindis.kotlin_service.utils.jwk.JwtToken
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ContextConfiguration
 import java.time.LocalDateTime
@@ -37,8 +41,18 @@ private val mapper: ObjectMapper = jacksonObjectMapper()
 class LocationIntegration : ApiTestContext() {
 
     @Test
+    fun `Unauthorized when access token is not included`() {
+        val rsp = authorizedRequest("/climate-api/location", port, "", null, HttpMethod.GET)
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), rsp["status"])
+    }
+
+    @Test
     fun `Ok - read location`() {
-        val response = apiGet(port, "/climate-api/location", "application/json")
+        val response = authorizedRequest("/climate-api/location", port, "",
+            JwtToken().toString(), HttpMethod.GET
+        )
+
         assertEquals(HttpStatus.OK.value(), response["status"])
 
         val responseList = mapper.readValue(response["body"] as String, List::class.java)

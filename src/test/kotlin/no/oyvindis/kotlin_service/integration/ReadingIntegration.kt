@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.oyvindis.kotlin_service.utils.*
+import no.oyvindis.kotlin_service.utils.jwk.JwtToken
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -33,8 +34,18 @@ private val mapper: ObjectMapper = jacksonObjectMapper()
 class ReadingIntegration: ApiTestContext() {
 
     @Test
+    fun `Unauthorized when access token is not included`() {
+        val rsp = authorizedRequest("/climate-api/reading/${LOCATION_ID_1000}", port, "", null, HttpMethod.GET)
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), rsp["status"])
+    }
+
+    @Test
     fun `Ok - get readings`() {
-        val response = apiGet(port, "/climate-api/reading/${LOCATION_ID_1000}", "application/json")
+        val response = authorizedRequest("/climate-api/reading/${LOCATION_ID_1000}", port, "",
+            JwtToken().toString(), HttpMethod.GET
+        )
+
         assertEquals(HttpStatus.OK.value(), response["status"])
 
         val responseList = mapper.readValue(response["body"] as String, List::class.java)
