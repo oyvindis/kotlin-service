@@ -13,8 +13,10 @@ kafka:
   topics:
     sensor: sensor
 slack:
-  security.token: ${SLACK_TOKEN_ID}
-  channel.id: ${SLACK_CHANNEL_ID}
+  security:
+    token: ${SLACK_TOKEN_ID}
+  channel:
+    id: ${SLACK_CHANNEL_ID}
 spring:
   data.mongodb.uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST:mongodb}:${MONGO_PORT:27017}/climate?authSource=admin&authMechanism=SCRAM-SHA-1
   security:
