@@ -1,9 +1,11 @@
 logging:
-  level.root: WARN
-  level.no: ${LOG_LEVEL:DEBUG}
-  level.org.springframework: WARN
-  level.org.springframework.web: WARN
-  level.org.apache.jena: ERROR
+  level:
+    root: WARN
+    no: ${LOG_LEVEL:DEBUG}
+    org.springframework: WARN
+    org.springframework.web: WARN
+    org.apache.jena: ERROR
+
 server:
   port: 8080
 kafka:
