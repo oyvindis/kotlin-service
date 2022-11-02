@@ -3,12 +3,8 @@ package no.oyvindis.kotlin_service.integration
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.oyvindis.kotlin_service.utils.ApiTestContext
-import no.oyvindis.kotlin_service.utils.LOCATION_ID_1000
-import no.oyvindis.kotlin_service.utils.apiGet
-import no.oyvindis.kotlin_service.utils.authorizedRequest
+import no.oyvindis.kotlin_service.utils.*
 import no.oyvindis.kotlin_service.utils.jwk.JwtToken
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -18,11 +14,8 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ContextConfiguration
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import kotlin.test.assertEquals
 
-val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
-val dateTimeSerializer = LocalDateTimeSerializer(formatter)
 
 private val mapper: ObjectMapper = jacksonObjectMapper()
     .registerModule(
@@ -38,18 +31,18 @@ private val mapper: ObjectMapper = jacksonObjectMapper()
 )
 @ContextConfiguration(initializers = [ApiTestContext.Initializer::class])
 @Tag("integration")
-class LocationIntegration : ApiTestContext() {
+class ReadingIntegrationTests: ApiTestContext() {
 
     @Test
     fun `Unauthorized when access token is not included`() {
-        val rsp = authorizedRequest("/climate-api/location", port, "", null, HttpMethod.GET)
+        val rsp = authorizedRequest("/climate-api/reading/${LOCATION_ID_1000}", port, "", null, HttpMethod.GET)
 
         assertEquals(HttpStatus.UNAUTHORIZED.value(), rsp["status"])
     }
 
     @Test
-    fun `Ok - read location`() {
-        val response = authorizedRequest("/climate-api/location", port, "",
+    fun `Ok - get readings`() {
+        val response = authorizedRequest("/climate-api/reading/${LOCATION_ID_1000}", port, "",
             JwtToken().toString(), HttpMethod.GET
         )
 
@@ -58,4 +51,5 @@ class LocationIntegration : ApiTestContext() {
         val responseList = mapper.readValue(response["body"] as String, List::class.java)
         assertEquals(responseList.size, 1)
     }
+
 }

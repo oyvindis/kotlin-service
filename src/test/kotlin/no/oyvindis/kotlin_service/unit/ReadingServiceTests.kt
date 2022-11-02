@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
 
 @Tag("unit")
-class ReadingService: ApiTestContext() {
+class ReadingServiceTests: ApiTestContext() {
     private val readingDAO: ReadingDAO = mock()
     private val locationDAO: LocationDAO = mock()
     private val readingService = ReadingService(readingDAO, locationDAO)

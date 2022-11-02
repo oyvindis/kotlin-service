@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
     properties = ["spring.profiles.active=integration-test"],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("integration")
-class LivenessIntegration : ApiTestContext() {
+class LivenessIntegrationTests : ApiTestContext() {
 
     @Test
     fun ping() {
