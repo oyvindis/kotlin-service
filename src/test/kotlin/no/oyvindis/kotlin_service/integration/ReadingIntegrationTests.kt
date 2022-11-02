@@ -3,6 +3,7 @@ package no.oyvindis.kotlin_service.integration
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.oyvindis.kotlin_service.utils.*
 import no.oyvindis.kotlin_service.utils.jwk.JwtToken
@@ -14,8 +15,11 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ContextConfiguration
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.test.assertEquals
 
+private val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
+private val dateTimeSerializer = LocalDateTimeSerializer(formatter)
 
 private val mapper: ObjectMapper = jacksonObjectMapper()
     .registerModule(
