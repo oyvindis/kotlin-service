@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
 
 @Tag("unit")
-class CommentService: ApiTestContext() {
+class LocationServiceTests: ApiTestContext() {
     private val locationDAO: LocationDAO = mock()
     private val locationService = LocationService(locationDAO)
 
