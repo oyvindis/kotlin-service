@@ -21,8 +21,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.test.assertEquals
 
-val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
-val dateTimeSerializer = LocalDateTimeSerializer(formatter)
+private val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
+private val dateTimeSerializer = LocalDateTimeSerializer(formatter)
 
 private val mapper: ObjectMapper = jacksonObjectMapper()
     .registerModule(
