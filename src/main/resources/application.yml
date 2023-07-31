@@ -8,6 +8,10 @@ logging:
 
 server:
   port: 8080
+
+security:
+  disabled: false
+
 kafka:
   bootstrapAddress: ${KAFKA_BOOTSTRAP_HOST:10.0.0.22}:${KAFKA_BOOTSTRAP_PORT:31172}
   topics:
