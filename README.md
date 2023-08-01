@@ -4,7 +4,6 @@ Kotlin service
 ## Init project
 
 Oppretter repo
-Kopierer kode fra "Ping commit"
 
 - mvn clean
 - mvn install
