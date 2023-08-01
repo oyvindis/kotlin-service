@@ -1,0 +1,14 @@
+security:
+  disabled: false
+
+spring:
+  profiles: local
+
+  data.mongodb.uri: mongodb://admin:admin@localhost:27017/climate?authSource=admin&authMechanism=SCRAM-SHA-1
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-22151406.okta.com/oauth2/default
+          jwk-set-uri: https://dev-22151406.okta.com/oauth2/default
