@@ -2,19 +2,24 @@ package no.oyvindis.kotlin_service.utils.jwk
 
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
+import java.time.Instant
 import java.util.*
 
 
-// class JwtToken (private val access: Access) {
-class JwtToken () {
-    private val exp = Date().time + 120 * 1000
-    private val aud = listOf("api://default")
+data class JwtToken(
+    val iss: String = "http://localhost:6970/adfs",
+    val aud: List<String> = listOf("api://default"),
+    val exp: Instant = Instant.now().plusSeconds(3600)
+) {
 
-    private fun buildToken() : String{
+    val encoded: String
+
+    init {
         val claimset = JWTClaimsSet.Builder()
+            .issuer(iss)
             .audience(aud)
-            .expirationTime(Date(exp))
-            .claim("iss", "https://dev-22151406.okta.com/oauth2/default")
+            .expirationTime(Date(exp.toEpochMilli()))
+            // .claim("iss", "https://dev-22151406.okta.com/oauth2/default")
             .claim("user_name","test.user@test.no")
             .claim("name", "TEST USER")
             .claim("given_name", "TEST")
@@ -22,16 +27,10 @@ class JwtToken () {
             // .claim("authorities", access.authorities)
             .build()
 
-        val signed = SignedJWT(JwkStore.jwtHeader(), claimset)
-        signed.sign(JwkStore.signer())
-
-        return signed.serialize()
+        val signed = SignedJWT(JwkStore.header, claimset)
+        signed.sign(JwkStore.signer)
+        encoded = signed.serialize()
     }
-
-    override fun toString(): String {
-        return buildToken()
-    }
-
 }
 
 //enum class Access(val authorities: String) {
