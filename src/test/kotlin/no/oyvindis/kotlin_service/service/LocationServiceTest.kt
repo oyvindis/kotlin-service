@@ -1,10 +1,8 @@
-package no.oyvindis.kotlin_service.unit
+package no.oyvindis.kotlin_service.service
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import no.oyvindis.kotlin_service.repository.LocationDAO
-import no.oyvindis.kotlin_service.service.LocationService
-import no.oyvindis.kotlin_service.service.toDBO
 import no.oyvindis.kotlin_service.utils.LOCATION_0
 
 
@@ -13,7 +11,7 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
 
 @Tag("unit")
-class LocationServiceTests {
+class LocationServiceTest {
     private val locationDAO: LocationDAO = mock()
     private val locationService = LocationService(locationDAO)
 
