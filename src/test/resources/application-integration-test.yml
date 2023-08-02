@@ -1,6 +1,9 @@
+security:
+  disabled: true
+
 spring:
   security:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:5000/oauth2/default
+          issuer-uri: http://localhost:6970/adfs
