@@ -20,3 +20,7 @@ slack:
   channel:
     id: ${SLACK_CHANNEL_ID}
 
+spring:
+
+  profiles:
+    default: local

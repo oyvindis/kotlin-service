@@ -2,8 +2,6 @@ security:
   disabled: false
 
 spring:
-  profiles: local
-
   data.mongodb.uri: mongodb://admin:admin@localhost:27017/climate?authSource=admin&authMechanism=SCRAM-SHA-1
 
   security:
