@@ -163,6 +163,9 @@
                 <version>${kotlin.version}</version>
                 <configuration>
                     <jvmTarget>${java.version}</jvmTarget>
+                    <compilerPlugins>
+                        <plugin>spring</plugin>
+                    </compilerPlugins>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
