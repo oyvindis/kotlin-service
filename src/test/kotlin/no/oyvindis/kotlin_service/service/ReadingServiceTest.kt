@@ -1,13 +1,13 @@
 package no.oyvindis.kotlin_service.service
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import no.oyvindis.kotlin_service.repository.LocationDAO
 import no.oyvindis.kotlin_service.repository.ReadingDAO
 import no.oyvindis.kotlin_service.utils.LOCATION_ID_1000
 import no.oyvindis.kotlin_service.utils.READING_0
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
 @Tag("unit")
