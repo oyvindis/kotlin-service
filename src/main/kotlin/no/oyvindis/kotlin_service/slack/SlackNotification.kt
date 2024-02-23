@@ -6,13 +6,14 @@ import no.oyvindis.kotlin_service.config.SlackChannel
 import org.springframework.stereotype.Component
 
 @Component
-class SlackNotification (
+class SlackNotification(
     private val slackMethodsClient: MethodsClient,
     private val slackChannel: SlackChannel
-        ) {
+) {
 
-    fun notify(message: String): ChatPostMessageResponse = slackMethodsClient.chatPostMessage { it
-        .channel(slackChannel.id)
-        .text(message)
-    }
+    fun notify(message: String): ChatPostMessageResponse =
+        slackMethodsClient.chatPostMessage {
+            it.channel(slackChannel.id)
+                .text(message)
+        }
 }
