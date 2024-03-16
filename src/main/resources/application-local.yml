@@ -1,5 +1,8 @@
+server:
+  port: 8080
+
 security:
-  disabled: false
+  disabled: true
 
 spring:
   data.mongodb.uri: mongodb://admin:admin@localhost:27017/climate?authSource=admin&authMechanism=SCRAM-SHA-1

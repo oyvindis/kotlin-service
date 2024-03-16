@@ -18,6 +18,17 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableMethodSecurity
 open class SecurityConfig {
     @Bean
+    @ConditionalOnProperty(name = ["security.disabled"], havingValue = "true", matchIfMissing = true)
+    open fun filterChainDisabled(http: HttpSecurity): SecurityFilterChain {
+        http.csrf().disable()
+            .cors().and()
+            .oauth2ResourceServer {
+                it.jwt()
+            }
+        return http.build()
+    }
+
+    @Bean
     @ConditionalOnProperty(name = ["security.disabled"], havingValue = "false", matchIfMissing = true)
     open fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf().disable()
