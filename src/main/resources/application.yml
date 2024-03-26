@@ -6,6 +6,12 @@ logging:
     org.springframework.web: WARN
     org.apache.jena: ERROR
 
+server:
+  servlet:
+    encoding:
+      force-response: true
+  forward-headers-strategy: framework
+
 security:
   disabled: false
 
