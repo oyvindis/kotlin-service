@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings
 import org.springframework.security.web.SecurityFilterChain
 
@@ -20,28 +21,34 @@ open class SecurityConfig {
     @Bean
     @ConditionalOnProperty(name = ["security.disabled"], havingValue = "true", matchIfMissing = true)
     open fun filterChainDisabled(http: HttpSecurity): SecurityFilterChain {
-        http.csrf().disable()
-            .cors().and()
-            .oauth2ResourceServer {
-                it.jwt()
+        http {
+            csrf { disable() }
+            cors { }
+            oauth2ResourceServer {
+                jwt { }
             }
+        }
         return http.build()
     }
 
     @Bean
     @ConditionalOnProperty(name = ["security.disabled"], havingValue = "false", matchIfMissing = true)
     open fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.csrf().disable()
-            .cors().and()
-            .authorizeRequests {
-                it.requestMatchers(HttpMethod.OPTIONS).permitAll()
-                it.requestMatchers(HttpMethod.GET,"/climate-api/reading/ping").permitAll()
-                it.requestMatchers(HttpMethod.GET, "/climate-api/reading/ready").permitAll()
-                it.anyRequest().authenticated()
+        http {
+            csrf { disable() } // Disables CSRF protection
+            cors { } // Enables CORS support
+
+            authorizeRequests {
+                authorize(HttpMethod.OPTIONS.name(), permitAll)
+                authorize(HttpMethod.GET, "/climate-api/reading/ping", permitAll)
+                authorize(HttpMethod.GET, "/climate-api/reading/ready", permitAll)
+                authorize(anyRequest, authenticated)
             }
-            .oauth2ResourceServer {
-                it.jwt()
+
+            oauth2ResourceServer {
+                jwt { }
             }
+        }
         return http.build()
     }
 
@@ -59,17 +66,4 @@ open class SecurityConfig {
     open fun authorizationServerSettings(): AuthorizationServerSettings? {
         return AuthorizationServerSettings.builder().build()
     }
-
-//    @Bean
-//    open fun jwtDecoder(properties: OAuth2ResourceServerProperties): JwtDecoder {
-//        val jwtDecoder = NimbusJwtDecoder.withJwkSetUri(properties.jwt.jwkSetUri).build()
-//        jwtDecoder.setJwtValidator(
-//            DelegatingOAuth2TokenValidator(
-//                listOf(
-//                    JwtTimestampValidator(),
-//                    JwtIssuerValidator(properties.jwt.issuerUri)
-//                )
-//            ))
-//        return jwtDecoder
-//    }
 }
