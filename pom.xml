@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.okta.jwt</groupId>
             <artifactId>okta-jwt-verifier</artifactId>
-            <version>0.5.7</version>
+            <version>0.5.9</version>
         </dependency>
         <dependency>
             <groupId>com.okta.jwt</groupId>
